@@ -29,12 +29,18 @@ in any text editor (Notepad works; the free **Visual Studio Code** is nicer).
 **The header, menu and footer appear on every page.** If you change something there (for example a
 phone number), use your editor's **Find in files** (Ctrl+Shift+F in VS Code) to change it everywhere.
 
-## How to change the phone or WhatsApp number
+## How to change the phone, WhatsApp number or email
 
-1. Find and replace `+234 808 100 8667` (shown on screen) and `2348081008667` (used in links) in all files.
-2. In `assets/js/main.js`, update the line `var WHATSAPP_NUMBER = '2348081008667';`.
+The site uses two numbers:
 
-## How to add the email address, office address or opening hours
+- **Phone (calls):** `+234 814 690 4810`, used in links as `+2348146904810`
+- **WhatsApp:** `+234 808 100 8667`, used in links as `2348081008667`
+
+1. Use Find in files to replace the old number in both forms (with spaces, and digits only) in all files.
+2. For WhatsApp, also update the line `var WHATSAPP_NUMBER = '2348081008667';` in `assets/js/main.js`.
+3. The email address (`info@ltc-ltd.net`) can be changed the same way with Find in files.
+
+## How to add opening hours or other missing details
 
 Search all files for `[CHECK]`. Each one is a note hidden in the code showing exactly where a missing
 detail goes and what to paste. Replace the note with the real line. `CHECKLIST.md` lists them all.
@@ -44,7 +50,7 @@ detail goes and what to paste. Replace the note with the real line. `CHECKLIST.m
 At the moment the form opens WhatsApp with the customer's enquiry already typed out.
 To receive enquiries by email instead:
 
-1. Go to **web3forms.com**, enter the email address that should receive enquiries, and they will email you a free "access key".
+1. Go to **web3forms.com**, enter the email address that should receive enquiries (e.g. info@ltc-ltd.net), and they will email you a free "access key".
 2. In `assets/js/main.js`, paste it between the quotes on the line `var WEB3FORMS_KEY = '';`.
 3. Save and publish. Send yourself a test enquiry.
 

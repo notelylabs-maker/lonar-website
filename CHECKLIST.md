@@ -1,29 +1,35 @@
 # Things to confirm with Lonar
 
-Everything below is either blank on the site or based on Sierra Paper's business model rather than
-details Lonar has confirmed. Search the files for `[CHECK]` to find where each missing detail goes.
+Search the files for `[CHECK]` to find where each missing detail goes.
 
-## Missing details (left blank on the site)
+## Done
 
-- [ ] **Email address.** Goes in the footer, the contact page, the privacy page, and the Web3Forms key setup (see README)
-- [ ] **Office / head office address.** Goes in the footer, the contact page, the About page "Company details", and the privacy page. Then a map can be added to the contact page. (The land form shows a local government starting "AM…". Is it AMAC, Abuja?)
+- [x] **Contact details (from the company profile):** phone +234 814 690 4810, email info@ltc-ltd.net, office Plot 294, Leventis Close, CBD, Abuja, FCT (with map and directions on the contact page)
+- [x] **WhatsApp:** kept on +234 808 100 8667 (the number confirmed to be on WhatsApp)
+- [x] **About page:** company introduction, mission, vision, five core values (Integrity, Reliability, Quality, Efficiency, Partnership), competitive advantages and future outlook, all from the company profile
+- [x] **Services:** Local trading, Import trading (customs clearance, freight forwarding), Subsidiary support, Consultancy, plus paper and board expertise
+- [x] **Products:** paper and board, plus industrial equipment and spare parts, raw materials, construction materials, hospitality items, consumer goods and electronics, general merchandise
+- [x] **Industries / target market:** added manufacturers, retailers and wholesalers, and businesses that import
+- [x] **NASCO, Royal Pacific Group, shareholding, share capital:** not mentioned anywhere on the site
+
+## Still missing (left blank on the site)
+
 - [ ] **Opening hours.** Footer and contact page
-- [ ] **Domain name.** None yet (see DOMAIN-SETUP.md)
-- [ ] **Social media.** None for now; the footer can take links later
+- [ ] **Social media.** None for now
 
-## Business details to confirm (written to match Sierra Paper, please check)
+## Please confirm
 
-- [ ] **Products:** printing papers (uncoated woodfree, copier/laser, coated, label papers); corrugated papers (kraftliner, testliner, white-top liners, fluting, semi-chemical fluting); packaging board (duplex, triplex, FBB, SBS). Remove any grade Lonar does not trade.
-- [ ] **Kraft papers for bags and sacks.** Should these be listed as a standard product? (Currently mentioned under "Industries" and "Other grades".)
-- [ ] **Services:** sourcing, grade selection, alternatives, buying and selling, supply coordination through to delivery, and help for suppliers placing surplus stock. Does Lonar do all of these, including importing and arranging delivery?
-- [ ] **Industries served:** carton makers, corrugated box makers, printers, packaging producers, paper bag makers, industrial packaging. Correct?
-- [ ] **Values** (Reliability, Integrity, Precision, Partnership). Does Lonar approve this wording?
-- [ ] **NASCO.** Is there a connection to NASCO Group that should (or should not) be mentioned? Nothing about NASCO is on the site.
+- [ ] **WhatsApp number:** is +234 808 100 8667 still right for WhatsApp, or should WhatsApp use the main line +234 814 690 4810?
+- [ ] **Domain:** the email uses **ltc-ltd.net**. Does Lonar own that domain? If so, the website can go on it (see DOMAIN-SETUP.md).
+- [ ] **Telecom equipment** is in the Memorandum but left off the site on purpose. Add it?
+- [ ] **Paper grades:** printing papers (uncoated woodfree, copier/laser, coated, label papers); corrugated papers (kraftliner, testliner, white-top liners, fluting, semi-chemical fluting); packaging board (duplex, triplex, FBB, SBS). Remove any grade Lonar does not trade.
+- [ ] **Kraft papers for bags and sacks.** List as a standard product?
 
 ## Before launch
 
-- [ ] Logo: a sharper or vector (SVG/PDF) version of the logo, if available
-- [ ] Photos: real photos of Lonar's stock, warehouse or deliveries to replace stock photos (optional, but recommended)
-- [ ] Privacy policy and terms of use reviewed by Lonar's legal adviser
-- [ ] WhatsApp enquiries tested from a phone (send a test quote from the contact page)
+- [ ] **Email enquiries from the form:** go to web3forms.com with info@ltc-ltd.net, get the free access key emailed to that inbox, and paste it into `assets/js/main.js` (see README). Until then the form sends enquiries by WhatsApp.
+- [ ] Logo: a sharper or vector (SVG/PDF) version, if available
+- [ ] Photos: real photos of Lonar's stock, warehouse or deliveries (optional, recommended)
+- [ ] Privacy policy and terms reviewed by Lonar's legal adviser
+- [ ] WhatsApp enquiry tested from a phone
 - [ ] Everything in the launch checklist in DOMAIN-SETUP.md
