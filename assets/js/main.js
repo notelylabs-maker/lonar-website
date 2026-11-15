@@ -192,20 +192,61 @@
     steps.forEach(function (s) { sio.observe(s); });
   }
 
-  /* ---------- Industries: preview image follows the pointer ---------- */
-  var preview = $('.ind-preview');
-  var px = 0, py = 0, tx = 0, ty = 0;
-  if (preview && finePointer && !reduce) {
-    var imgs = $$('img', preview);
-    $$('.ind-row').forEach(function (row, i) {
-      row.addEventListener('mouseenter', function () {
-        preview.classList.add('on');
-        imgs.forEach(function (im, j) { im.classList.toggle('on', i === j); });
+  /* ---------- Pop-in children get an index for their delay ---------- */
+  $$('[data-pop]').forEach(function (g) {
+    Array.prototype.forEach.call(g.children, function (c, i) { c.style.setProperty('--ci', i); });
+  });
+
+  /* ---------- Footer word: split into letters ---------- */
+  $$('.footer-word').forEach(function (el) {
+    var t = el.textContent.trim(); el.textContent = '';
+    t.split('').forEach(function (ch, i) { var sp = document.createElement('span'); sp.textContent = ch; sp.style.setProperty('--ci', i); el.appendChild(sp); });
+  });
+
+  /* ---------- 3D tilt on cards (mouse / trackpad only) ---------- */
+  if (finePointer && !reduce) {
+    $$('[data-tilt]').forEach(function (card) {
+      var max = parseFloat(card.getAttribute('data-tilt')) || 7;
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        var ang = Math.min(1, Math.hypot(x, y) * 2) * max;
+        card.classList.add('tilting');
+        card.style.setProperty('--tilt', (-y).toFixed(3) + ' ' + x.toFixed(3) + ' 0 ' + ang.toFixed(2) + 'deg');
+        card.style.setProperty('--gx', ((x + 0.5) * 100).toFixed(1) + '%');
+        card.style.setProperty('--gy', ((y + 0.5) * 100).toFixed(1) + '%');
       });
-      row.addEventListener('mouseleave', function () { preview.classList.remove('on'); });
+      card.addEventListener('pointerleave', function () {
+        card.classList.remove('tilting');
+        card.style.setProperty('--tilt', '0 0 1 0deg');
+      });
     });
-    window.addEventListener('mousemove', function (e) { tx = e.clientX + 170; ty = e.clientY; }, { passive: true });
+
+    /* Buttons drift a little toward the pointer */
+    $$('.btn, .wa-float').forEach(function (b) {
+      b.addEventListener('pointermove', function (e) {
+        var r = b.getBoundingClientRect();
+        b.style.setProperty('--mx', (((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(1) + 'px');
+        b.style.setProperty('--my', (((e.clientY - r.top) / r.height - 0.5) * 6).toFixed(1) + 'px');
+      });
+      b.addEventListener('pointerleave', function () { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); });
+    });
   }
+
+  /* ---------- Hero 3D scene ---------- */
+  var scene = $('.scene');
+  var scenePanels = scene ? $$('.panel', scene) : [];
+  var sceneBox = scene ? scene.parentElement : null;
+  var ptrX = 0, ptrY = 0, rotX = 0, rotY = 0;
+  if (scene && finePointer && !reduce) {
+    window.addEventListener('pointermove', function (e) {
+      ptrX = e.clientX / window.innerWidth - 0.5;
+      ptrY = e.clientY / window.innerHeight - 0.5;
+    }, { passive: true });
+  }
+
+  var progressBar = $('.progress');
+  var giants = $$('.hero-giant, .page-hero-giant');
 
   /* ---------- Moving word bands ---------- */
   var bands = $$('.band').map(function (band) {
@@ -248,6 +289,10 @@
       }
     }
     if (floatBtn) floatBtn.classList.toggle('show', y > 500 || reduce);
+    if (progressBar) {
+      var maxY = document.documentElement.scrollHeight - vh;
+      progressBar.style.setProperty('--p', maxY > 0 ? Math.min(1, y / maxY).toFixed(4) : 0);
+    }
 
     if (!reduce) {
       // Bands slide only when the visitor scrolls (no constant motion), and lean with scroll speed
@@ -265,7 +310,7 @@
         var r = p.el.parentElement.getBoundingClientRect();
         if (r.bottom < -100 || r.top > vh + 100) return;
         var off = (r.top + r.height / 2 - vh / 2) * -p.speed;
-        p.el.style.transform = 'translate3d(0,' + off.toFixed(1) + 'px,0) scale(1.14)';
+        p.el.style.translate = '0 ' + off.toFixed(1) + 'px';
       });
 
       // Scrub text
@@ -288,11 +333,23 @@
         meterBar.style.setProperty('--p', Math.max(0, Math.min(1, p)).toFixed(3));
       }
 
-      // Industry preview follows pointer smoothly
-      if (preview) {
-        px += (tx - px) * 0.14; py += (ty - py) * 0.14;
-        preview.style.left = px + 'px'; preview.style.top = py + 'px';
+      // Hero scene: tilt toward the pointer, and spread the panels apart as the hero scrolls away
+      if (scene) {
+        var sr2 = sceneBox.getBoundingClientRect();
+        if (sr2.bottom > 0 && sr2.top < vh) {
+          var sp = Math.max(0, Math.min(1, -sr2.top / (sr2.height * 0.9)));
+          rotX += ((-ptrY * 10 + sp * 14) - rotX) * 0.08;
+          rotY += ((ptrX * 14 - sp * 10) - rotY) * 0.08;
+          scene.style.transform = 'rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg)';
+          scenePanels.forEach(function (pn) {
+            var depth = parseFloat(pn.getAttribute('data-depth')) || 0;
+            pn.style.translate = (ptrX * depth * 26).toFixed(1) + 'px ' + (ptrY * depth * 20 - sp * depth * 60).toFixed(1) + 'px ' + (sp * depth * 120).toFixed(1) + 'px';
+          });
+        }
       }
+
+      // Giant outline words drift sideways with scroll
+      giants.forEach(function (g) { g.style.translate = (-y * 0.18).toFixed(1) + 'px 0'; });
     }
     requestAnimationFrame(frame);
   }
