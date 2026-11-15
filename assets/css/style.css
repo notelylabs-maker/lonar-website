@@ -578,12 +578,25 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 700; font-stretch: 104%; line-he
 .footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .footer-col a { color: var(--on-green); text-decoration: none; background: linear-gradient(var(--gold), var(--gold)) 0 100% / 0 1px no-repeat; transition: background-size .5s var(--ease-out); padding-bottom: 2px; }
 .footer-col a:hover { background-size: 100% 1px; }
-.footer-word { font: 900 clamp(5rem, 21vw, 21rem)/.78 var(--font-display); font-stretch: 125%; letter-spacing: -.035em; color: transparent; -webkit-text-stroke: 1px rgba(217, 183, 126, .22); white-space: nowrap; text-align: center; padding-top: clamp(28px, 4vw, 52px); user-select: none; }
+/* Big outline word: sized from the content width so its first and last letters line up
+   exactly with the footer's left and right edges at every screen size. */
+.footer-word {
+  --fw: calc(min(100vw, var(--max)) - 2 * var(--gutter));
+  display: flex; justify-content: space-between; align-items: flex-end;
+  font: 900 calc(var(--fw) / 4.75)/.8 var(--font-display); font-stretch: 125%; letter-spacing: 0;
+  color: transparent; -webkit-text-stroke: 1px rgba(217, 183, 126, .28); white-space: nowrap;
+  padding-top: clamp(28px, 4vw, 52px); padding-bottom: clamp(12px, 1.6vw, 24px); user-select: none;
+}
 .footer-bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 28px; padding-block: 26px; border-top: 1px solid var(--line-on-green); font-size: .85rem; }
 .footer-bottom ul { display: flex; flex-wrap: wrap; gap: 22px; list-style: none; margin: 0; padding: 0; }
 .footer-bottom a { color: var(--on-green-muted); text-decoration: none; }
 .footer-bottom a:hover { color: var(--on-green); }
 @media (min-width: 800px) { .footer-top { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; } }
+@media (max-width: 799px) {
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px 24px; }
+  .footer-brand, .footer-col:last-child { grid-column: 1 / -1; }
+  .footer-bottom { padding-bottom: 92px; }
+}
 
 /* Floating WhatsApp button */
 .wa-float { position: fixed; right: 18px; bottom: 18px; z-index: 80; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: var(--green-900); box-shadow: 0 16px 32px -14px rgba(1,26,10,.6); transition: transform .5s var(--ease-out), background .3s; }
