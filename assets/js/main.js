@@ -206,7 +206,7 @@
   /* ---------- 3D tilt on cards (mouse / trackpad only) ---------- */
   if (finePointer && !reduce) {
     $$('[data-tilt]').forEach(function (card) {
-      var max = parseFloat(card.getAttribute('data-tilt')) || 7;
+      var max = (parseFloat(card.getAttribute('data-tilt')) || 7) * 0.5;
       card.addEventListener('pointermove', function (e) {
         var r = card.getBoundingClientRect();
         var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
@@ -245,6 +245,7 @@
     }, { passive: true });
   }
 
+  var zooms = $$('[data-zoom]');
   var progressBar = $('.progress');
   var giants = $$('.hero-giant, .page-hero-giant');
 
@@ -310,6 +311,8 @@
         var r = p.el.parentElement.getBoundingClientRect();
         if (r.bottom < -100 || r.top > vh + 100) return;
         var off = (r.top + r.height / 2 - vh / 2) * -p.speed;
+        var room = r.height * 0.045;
+        off = Math.max(-room, Math.min(room, off));
         p.el.style.translate = '0 ' + off.toFixed(1) + 'px';
       });
 
@@ -347,6 +350,16 @@
           });
         }
       }
+
+      // Big photos grow from slightly smaller with rounder corners to full size as they arrive
+      zooms.forEach(function (z) {
+        var zr = z.getBoundingClientRect();
+        if (zr.bottom < -50 || zr.top > vh + 50) return;
+        var zp = Math.max(0, Math.min(1, (vh - zr.top) / (vh * 0.8)));
+        zp = 1 - Math.pow(1 - zp, 3);
+        z.style.transform = 'scale(' + (0.86 + 0.14 * zp).toFixed(4) + ')';
+        z.style.borderRadius = (36 - 22 * zp).toFixed(1) + 'px';
+      });
 
       // Giant outline words drift sideways with scroll
       giants.forEach(function (g) { g.style.translate = (-y * 0.18).toFixed(1) + 'px 0'; });

@@ -699,3 +699,98 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 700; font-stretch: 104%; line-he
 
 /* Hero photo: show the paper reels on the right of the aisle */
 .panel--main img { object-position: 88% 50%; }
+
+/* ==========================================================================
+   v4: stronger contrast, clear colour rhythm, Apple-style alignment and motion
+   (these rules deliberately override earlier ones)
+   ========================================================================== */
+:root {
+  --ink: #0E1812;            /* near-black green for all main text */
+  --muted: #26312A;          /* secondary text is now dark, not grey */
+  --paper: #F1EBDE;          /* warmer, clearly different from white */
+  --paper-2: #E5DCC9;
+  --line: rgba(2, 45, 17, .16);
+  --line-strong: rgba(2, 45, 17, .3);
+  --on-green-muted: #D6E2D9;
+  --radius: 14px;
+  --fs-body: 1.09rem;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+}
+body { color: var(--ink); }
+.lead { color: var(--ink); font-size: clamp(1.12rem, 1.35vw, 1.3rem); line-height: 1.6; }
+h2, .h2 { font-weight: 800; }
+h3, .h3 { font-weight: 750; }
+
+/* Section labels: bold and readable, with a gold rule */
+.label { color: var(--ink); font-weight: 700; font-size: .8rem; letter-spacing: .2em; }
+.label-line { height: 2px; background: var(--gold); }
+.eyebrow { font-weight: 700; font-size: .8rem; }
+
+/* Headings and intro text stack on one clean left edge (no floating paragraph on the right) */
+.section-head, .section-head--split { grid-template-columns: 1fr !important; gap: 22px; align-items: start; }
+.section-head h2 { max-width: 22ch; }
+.section-head .lead { max-width: 64ch; }
+
+/* Cards: clear edges, soft depth, equal heights, links aligned at the bottom */
+.cat-card, .svc, .ind-card, .audience-card, .form-card { border-radius: var(--radius); }
+.cat-card, .svc, .ind-card { border: 1px solid var(--line); box-shadow: 0 1px 2px rgba(1, 26, 10, .06), 0 22px 44px -32px rgba(1, 26, 10, .4); }
+.section--paper .cat-card, .section--paper .svc, .section--paper .ind-card { border-color: rgba(2, 45, 17, .12); }
+.cat-card:hover, .svc:hover, .ind-card:hover { box-shadow: 0 2px 4px rgba(1, 26, 10, .08), 0 34px 60px -34px rgba(1, 26, 10, .5); }
+.cat-body, .ind-card-body { display: flex; flex-direction: column; gap: 12px; }
+.cat-body .link-arrow { margin-top: auto; padding-top: 6px; }
+.cat-body p, .svc p, .ind-card-body p, .value p, .step p, .split-body p, .intro-body p, .ind-row p, .grade dd, .audience-card p, .product-body > p, .spec-note { color: var(--muted); }
+.media { border-radius: var(--radius); }
+.cat-card .media, .ind-card .media { border-radius: 0; }
+.ind-row::before { background: #fff; }
+
+/* Colour rhythm */
+.band--gold { background: var(--gold); border: 0; }
+.band--gold .band-item { color: var(--green-900); }
+.band--gold .band-item .o { -webkit-text-stroke-color: var(--green-900); }
+.band--gold .band-item .dot { background: var(--green-900); }
+.tile { border-radius: 28px; padding: clamp(24px, 5vw, 72px); }
+.tile--green { background: var(--green-900); color: var(--on-green); }
+.tile--green h2 { color: var(--on-green); }
+.tile--green .gold { color: var(--gold-light); }
+.tile--green p, .tile--green .split-body p { color: var(--on-green-muted); }
+.tile--green .ticks li { color: var(--on-green); }
+.tile--green .media { border-radius: 18px; }
+.page-hero-giant { display: none; }
+.hero-giant { -webkit-text-stroke-color: rgba(2, 45, 17, .07); }
+
+/* Three-photo banner strip (sharp photos at their real size) */
+.banner-strip { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; height: clamp(220px, 34vw, 480px); }
+.banner-strip .media { height: 100%; }
+@media (max-width: 700px) { .banner-strip { grid-template-columns: 1fr 1fr; height: auto; } .banner-strip .media { aspect-ratio: 4 / 3; } .banner-strip .media:first-child { grid-column: 1 / -1; aspect-ratio: 16 / 9; } }
+
+/* Apple-style motion: calm, long, smooth easing; no wipes or colour filters */
+.js [data-reveal] { transition-timing-function: var(--ease-out); transition-duration: 1.1s; }
+.js [data-reveal="clip"] { opacity: 0; clip-path: inset(6% 6% 6% 6% round 28px); transition: clip-path 1.5s var(--ease-out), opacity 1s var(--ease-out); transition-delay: calc(var(--d, 0) * 1ms); }
+.js [data-reveal="clip"].in { opacity: 1; clip-path: inset(0 0 0 0 round var(--radius)); }
+.js [data-reveal="clip"]::after { display: none; }
+.js [data-reveal="clip"] img { scale: 1.24; filter: none; transition: scale 2s var(--ease-out); transition-delay: calc(var(--d, 0) * 1ms); }
+.js [data-reveal="clip"].in img { scale: 1.1; filter: none; }
+[data-parallax] { scale: 1.1; }
+.js [data-reveal="3d"] { transform: perspective(1400px) translate3d(0, 56px, 0) rotateX(9deg) scale(.97); transition: opacity 1.1s var(--ease-out), transform 1.4s var(--ease-out); }
+.js [data-reveal="3d"].in { transform: none; }
+.js .hero h1 .line > span { transform: translateY(100%) rotateX(-38deg); transition: transform 1.4s var(--ease-out), opacity 1s var(--ease-out); }
+.scrub .sw { opacity: .2; }
+[data-zoom] { transform-origin: 50% 30%; will-change: transform; overflow: hidden; }
+.why-photo { border-radius: 24px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal="clip"] { opacity: 1 !important; clip-path: none !important; }
+  [data-zoom] { transform: none !important; }
+}
+
+/* Industries list: photos always visible, gentle zoom on hover */
+@media (min-width: 900px) {
+  .ind-row .thumb, .ind-row:hover .thumb, .ind-row:focus-within .thumb { clip-path: none; }
+  .ind-row .thumb img { scale: 1.04; }
+  .ind-row:hover .thumb img { scale: 1.1; }
+}
+/* Page intros stack under the headline on one left edge */
+.page-hero-grid { grid-template-columns: 1fr !important; gap: 0; }
+.page-hero .lead { max-width: 62ch; }
+/* Big statements use more of the width */
+.statement { max-width: 30ch; }
