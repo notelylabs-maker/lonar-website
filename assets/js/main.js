@@ -392,6 +392,24 @@
     Object.keys(map).forEach(function (id) { var t = document.getElementById(id); if (t) pio.observe(t); });
   }
 
+  /* ---------- Contact map: load Google Maps only when asked ---------- */
+  $$('.map-facade').forEach(function (box) {
+    var btn = $('button', box);
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var f = document.createElement('iframe');
+      f.src = box.getAttribute('data-map-src');
+      f.title = box.getAttribute('data-map-title');
+      f.setAttribute('referrerpolicy', 'no-referrer-when-downgrade');
+      f.setAttribute('allowfullscreen', '');
+      box.innerHTML = '';
+      box.classList.remove('map-facade');
+      box.appendChild(f);
+      f.setAttribute('tabindex', '0');
+      f.focus();
+    });
+  });
+
   /* ---------- Footer year ---------- */
   $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
 

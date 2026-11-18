@@ -809,3 +809,14 @@ h3, .h3 { font-weight: 750; }
 
 /* Phones: keep section labels on one line */
 @media (max-width: 480px) { .label { gap: 12px; letter-spacing: .16em; } .label-line { width: 32px; } }
+
+/* Page intros glide in as soon as the page is ready (no waiting for scripts) */
+.js .ph-in { transform: translateY(26px); transition: transform 1.2s var(--ease-out); transition-delay: calc(.05s + var(--d, 0) * 1ms); }
+.js.is-ready .ph-in { transform: none; }
+
+/* Contact map placeholder: tap to load the live map */
+.map-facade { display: grid; place-items: center; align-content: center; gap: 14px; text-align: center; padding: 24px;
+  background: linear-gradient(135deg, var(--paper) 0%, var(--paper-2) 100%); border: 1px solid var(--line); }
+.map-facade .map-pin { width: 40px; height: 40px; color: var(--gold-text); }
+.map-facade .map-addr { font: 700 1rem/1.4 var(--font-display); color: var(--green-900); }
+@media (prefers-reduced-motion: reduce) { .js .ph-in { transform: none !important; } }
