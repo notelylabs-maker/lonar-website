@@ -794,3 +794,18 @@ h3, .h3 { font-weight: 750; }
 .page-hero .lead { max-width: 62ch; }
 /* Big statements use more of the width */
 .statement { max-width: 30ch; }
+
+/* Finishing touches */
+.audience-card--dark p { color: var(--on-green-muted); }
+.audience-card--dark h3 { color: var(--on-green); }
+.step-n { color: rgba(2, 45, 17, .34); }
+.section--paper .step-n { color: rgba(2, 45, 17, .38); }
+
+/* Speed and readability: hero text is visible immediately (it still glides in);
+   faded words in scroll statements stay readable */
+.js .hero-fade { opacity: 1; }
+.js .hero h1 .line > span { transition-delay: calc(.08s + var(--l) * .09s); }
+.scrub .sw { opacity: .5; }
+
+/* Phones: keep section labels on one line */
+@media (max-width: 480px) { .label { gap: 12px; letter-spacing: .16em; } .label-line { width: 32px; } }

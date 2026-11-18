@@ -274,8 +274,17 @@
   var vh = window.innerHeight;
   window.addEventListener('resize', function () { vh = window.innerHeight; measureBands(); }, { passive: true });
 
+  var busy = 120;
+  function wake() { busy = 90; }
+  window.addEventListener('scroll', wake, { passive: true });
+  window.addEventListener('pointermove', wake, { passive: true });
+  window.addEventListener('resize', wake, { passive: true });
+  window.addEventListener('wheel', wake, { passive: true });
+
   function frame(time) {
     if (lenis) lenis.raf(time);
+    if (busy <= 0 && !(lenis && lenis.isScrolling)) { requestAnimationFrame(frame); return; }
+    busy--;
     var y = window.scrollY;
     var dy = y - lastY;
     vel += (dy - vel) * 0.12;

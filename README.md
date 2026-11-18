@@ -75,7 +75,7 @@ At the top of `assets/css/style.css`:
 
 - `--green-900: #022D11` is the logo green.
 - `--gold: #BC8E47` is the logo gold.
-- Headings use the **Archivo** font and body text uses **Inter** (both from Google Fonts).
+- Headings use the **Archivo** font and body text uses **Inter** (both free, open-licence fonts stored in `assets/fonts`).
 
 ## Publishing changes
 
