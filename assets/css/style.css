@@ -694,4 +694,8 @@ h3, .h3 { font-size: var(--fs-h3); font-weight: 700; font-stretch: 104%; line-he
 
 /* Keep content at the top of equal-height columns (no stretched gaps) */
 .value, .why-item, .audience-card, .ind-card-body, .cat-body, .svc { align-content: start; }
-.map-wrap { min-height: 240px; }
+.map-wrap { width: 100%; }
+@media (max-width: 600px) { .map-wrap { aspect-ratio: 4 / 3; } }
+
+/* Hero photo: show the paper reels on the right of the aisle */
+.panel--main img { object-position: 88% 50%; }

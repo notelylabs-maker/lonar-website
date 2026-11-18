@@ -12,7 +12,7 @@
   if (reduce) root.classList.add('still');
 
   /* ---------- Settings: edit these two lines when details change ---------- */
-  var WHATSAPP_NUMBER = '2348081008667';   // international format, digits only
+  var EMAIL_TO = 'info@ltc-ltd.net';       // where quote requests go
   var WEB3FORMS_KEY = '';                  // paste a Web3Forms access key here to send enquiries by email
 
   /* ---------- Page curtain: reveal on load, cover on leave ---------- */
@@ -462,17 +462,17 @@
           })
           .catch(function () {
             done();
-            setStatus('bad', 'Sorry, your enquiry could not be sent. Please try again, or message us on <a href="https://wa.me/' + WHATSAPP_NUMBER + '">WhatsApp</a>.');
+            setStatus('bad', 'Sorry, your enquiry could not be sent. Please try again, or email us at <a href="mailto:' + EMAIL_TO + '">' + EMAIL_TO + '</a>.');
           });
       } else {
-        // No email service yet: hand the enquiry over to WhatsApp, already written out.
-        // Opened straight away (inside the click) so pop-up blockers allow it.
-        var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(summary(data));
-        window.open(url, '_blank', 'noopener');
+        // No form service yet: open the visitor's email app with the enquiry already written out.
+        var mail = 'mailto:' + EMAIL_TO + '?subject=' + encodeURIComponent('Quote request: ' + (data.get('company') || data.get('name'))) +
+          '&body=' + encodeURIComponent(summary(data));
+        window.location.href = mail;
         setTimeout(function () {
           done();
-          setStatus('ok', '<strong>Your enquiry is ready.</strong> WhatsApp has opened with your details filled in. Just press send. ' +
-            'If it did not open, <a href="' + url + '" target="_blank" rel="noopener">tap here to send it on WhatsApp</a>.');
+          setStatus('ok', '<strong>Your enquiry is ready.</strong> Your email app has opened with your details filled in. Just press send. ' +
+            'If nothing opened, <a href="' + mail + '">tap here</a> or email us at <a href="mailto:' + EMAIL_TO + '">' + EMAIL_TO + '</a>.');
         }, 400);
       }
     });

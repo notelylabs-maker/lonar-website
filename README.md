@@ -29,16 +29,15 @@ in any text editor (Notepad works; the free **Visual Studio Code** is nicer).
 **The header, menu and footer appear on every page.** If you change something there (for example a
 phone number), use your editor's **Find in files** (Ctrl+Shift+F in VS Code) to change it everywhere.
 
-## How to change the phone, WhatsApp number or email
+## Phone and WhatsApp (currently switched off)
 
-The site uses two numbers:
+The site shows **no phone number or WhatsApp button** until Lonar's own new number is registered and active.
+Contact is by email (`info@ltc-ltd.net`), the office address and the quote form.
 
-- **Phone (calls):** `+234 814 690 4810`, used in links as `+2348146904810`
-- **WhatsApp:** `+234 808 100 8667`, used in links as `2348081008667`
+When the new number is ready, your developer can switch phone and WhatsApp back on everywhere with one setting.
+To do it by hand: search all files for `[CHECK] New Lonar phone` and add the number where each note says.
 
-1. Use Find in files to replace the old number in both forms (with spaces, and digits only) in all files.
-2. For WhatsApp, also update the line `var WHATSAPP_NUMBER = '2348081008667';` in `assets/js/main.js`.
-3. The email address (`info@ltc-ltd.net`) can be changed the same way with Find in files.
+The email address can be changed with Find in files.
 
 ## How to add opening hours or other missing details
 
@@ -47,8 +46,8 @@ detail goes and what to paste. Replace the note with the real line. `CHECKLIST.m
 
 ## How to make the quote form send emails
 
-At the moment the form opens WhatsApp with the customer's enquiry already typed out.
-To receive enquiries by email instead:
+At the moment the form opens the visitor's email app with their enquiry already written out, addressed to info@ltc-ltd.net.
+To have enquiries sent automatically (no email app needed):
 
 1. Go to **web3forms.com**, enter the email address that should receive enquiries (e.g. info@ltc-ltd.net), and they will email you a free "access key".
 2. In `assets/js/main.js`, paste it between the quotes on the line `var WEB3FORMS_KEY = '';`.
